@@ -1,11 +1,10 @@
 from aws_get_secret import get_secret
-
-# from aws.get_secret import get_secret
+import json
 
 try:
   secret = get_secret()
 except Exception as e:
     print(e)
 
-print(secret)
-print(type(secret))
+openai_api_key = json.loads(secret)['OpenAI-Test']
+
