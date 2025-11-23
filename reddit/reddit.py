@@ -39,8 +39,25 @@ headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleW
 
 response = requests.get(url, headers=headers)
 
-print(response.json())
-print()
+def find_all_titles(obj):
+  titles = []
+
+  if isinstance(obj, dict):
+    for key, value in obj.items():
+      if key == "title":
+        titles.append(value)
+      titles.extend(find_all_titles(value))
+
+  elif isinstance(obj, list):
+    for item in obj:
+      titles.extend(find_all_titles(item))
+
+  return titles
+
+
+all_titles = find_all_titles(response.json())
+
+print(all_titles)
 print(args)
 print(url)
 
